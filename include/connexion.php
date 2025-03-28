@@ -1,6 +1,4 @@
 <?php
-require('connect.php');
-
 $CONNEXION = mysqli_connect(SERVEUR_BD, USER_BD, PASS_BD);
 
 if (!$CONNEXION) {
