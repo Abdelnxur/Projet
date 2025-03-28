@@ -1,0 +1,6 @@
+<?php
+define('SERVEUR_BD', getenv('SERVEUR_BD'));
+define('LOGIN_BD', getenv('MARIADB_USER'));
+define('MDP_BD', getenv('MARIADB_PASSWORD'));
+define('NOM_BD', getenv('MARIADB_DATABASE'));
+?>
