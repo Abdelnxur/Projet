@@ -1,4 +1,5 @@
 <?php
+require("connect.php"); 
 require('include/header.php');
 require('include/menu.php');
 require('include/connexion.php');
