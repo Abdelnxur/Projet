@@ -1,7 +1,10 @@
 <link rel="stylesheet" href="css/site.css">
 <a href="index.php">Revenir à l'affichage des joueurs</a>
 <?php
+require("connect.php");
+
 require('include/connexion.php');
+
 
 
 if (isset($_POST['ajouter'])) {
