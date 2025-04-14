@@ -1,8 +1,5 @@
 <?php
-require("connect.php");                     
-
-require("include/connexion.php");          
-
+require("connect.php");
 require("include/header.php");             
 require("include/menu.php");
 ?>
