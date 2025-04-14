@@ -1,17 +1,36 @@
 <?php
-require("connect.php");
+require("connect.php"); 
 
-$CONNEXION = mysqli_connect(SERVEUR_BD, USER_BD, PASS_BD);
-if (!$CONNEXION) {
-    die("Erreur de connexion au serveur : " . mysqli_connect_error());
+if (isset($_POST['ajouter'])) {
+    $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
+    $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
+    $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
+    $age = intval($_POST['age']);
+
+    $sql = "INSERT INTO joueurs (nom, equipe, position, age) VALUES ('$nom', '$equipe', '$position', $age)";
+    mysqli_query($CONNEXION, $sql);
 }
-if (!mysqli_select_db($CONNEXION, NOM_BD)) {
-    die("Erreur de sélection de la base : " . mysqli_error($CONNEXION));
+
+if (isset($_GET['supprimer'])) {
+    $id = intval($_GET['supprimer']);
+    $sql = "DELETE FROM joueurs WHERE id = $id";
+    mysqli_query($CONNEXION, $sql);
 }
-if (!mysqli_set_charset($CONNEXION, 'UTF8')) {
-    die("Erreur encodage UTF-8 : " . mysqli_error($CONNEXION));
+
+if (isset($_POST['modifier'])) {
+    $id = intval($_POST['id']);
+    $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
+    $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
+    $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
+    $age = intval($_POST['age']);
+
+    $sql = "UPDATE joueurs SET nom='$nom', equipe='$equipe', position='$position', age=$age WHERE id=$id";
+    mysqli_query($CONNEXION, $sql);
 }
+
+$result = mysqli_query($CONNEXION, "SELECT * FROM joueurs");
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,37 +40,6 @@ if (!mysqli_set_charset($CONNEXION, 'UTF8')) {
 </head>
 <body>
     <a href="index.php">Revenir à l'affichage des joueurs</a>
-
-    <?php
-    if (isset($_POST['ajouter'])) {
-        $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
-        $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
-        $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
-        $age = intval($_POST['age']);
-
-        $sql = "INSERT INTO joueurs (nom, equipe, position, age) VALUES ('$nom', '$equipe', '$position', $age)";
-        mysqli_query($CONNEXION, $sql);
-    }
-
-    if (isset($_GET['supprimer'])) {
-        $id = intval($_GET['supprimer']);
-        $sql = "DELETE FROM joueurs WHERE id = $id";
-        mysqli_query($CONNEXION, $sql);
-    }
-
-    if (isset($_POST['modifier'])) {
-        $id = intval($_POST['id']);
-        $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
-        $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
-        $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
-        $age = intval($_POST['age']);
-
-        $sql = "UPDATE joueurs SET nom='$nom', equipe='$equipe', position='$position', age=$age WHERE id=$id";
-        mysqli_query($CONNEXION, $sql);
-    }
-
-    $result = mysqli_query($CONNEXION, "SELECT * FROM joueurs");
-    ?>
 
     <h2>Ajouter un joueur</h2>
     <form method="post">
