@@ -1,48 +1,49 @@
-<link rel="stylesheet" href="css/site.css">
-<a href="index.php">Revenir à l'affichage des joueurs</a>
 <?php
-require("connect.php");
-
-require('include/connexion.php');
-
-
-
-if (isset($_POST['ajouter'])) {
-    $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
-    $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
-    $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
-    $age = intval($_POST['age']);
-
-    $sql = "INSERT INTO joueurs (nom, equipe, position, age) VALUES ('$nom', '$equipe', '$position', $age)";
-    mysqli_query($CONNEXION, $sql);
-}
-
-if (isset($_GET['supprimer'])) {
-    $id = intval($_GET['supprimer']);
-    $sql = "DELETE FROM joueurs WHERE id = $id";
-    mysqli_query($CONNEXION, $sql);
-}
-
-if (isset($_POST['modifier'])) {
-    $id = intval($_POST['id']);
-    $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
-    $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
-    $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
-    $age = intval($_POST['age']);
-
-    $sql = "UPDATE joueurs SET nom='$nom', equipe='$equipe', position='$position', age=$age WHERE id=$id";
-    mysqli_query($CONNEXION, $sql);
-}
-
-$result = mysqli_query($CONNEXION, "SELECT * FROM joueurs");
+require("connect.php");              // ✅ Définit les constantes
+require("include/connexion.php");    // ✅ Crée la connexion $CONNEXION
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Gestion des joueurs</title>
+    <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
+    <a href="index.php">Revenir à l'affichage des joueurs</a>
+
+    <?php
+    if (isset($_POST['ajouter'])) {
+        $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
+        $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
+        $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
+        $age = intval($_POST['age']);
+
+        $sql = "INSERT INTO joueurs (nom, equipe, position, age) VALUES ('$nom', '$equipe', '$position', $age)";
+        mysqli_query($CONNEXION, $sql);
+    }
+
+    if (isset($_GET['supprimer'])) {
+        $id = intval($_GET['supprimer']);
+        $sql = "DELETE FROM joueurs WHERE id = $id";
+        mysqli_query($CONNEXION, $sql);
+    }
+
+    if (isset($_POST['modifier'])) {
+        $id = intval($_POST['id']);
+        $nom = mysqli_real_escape_string($CONNEXION, $_POST['nom']);
+        $equipe = mysqli_real_escape_string($CONNEXION, $_POST['equipe']);
+        $position = mysqli_real_escape_string($CONNEXION, $_POST['position']);
+        $age = intval($_POST['age']);
+
+        $sql = "UPDATE joueurs SET nom='$nom', equipe='$equipe', position='$position', age=$age WHERE id=$id";
+        mysqli_query($CONNEXION, $sql);
+    }
+
+    $result = mysqli_query($CONNEXION, "SELECT * FROM joueurs");
+    ?>
+
     <h2>Ajouter un joueur</h2>
     <form method="post">
         Nom: <input type="text" name="nom" required>
@@ -63,7 +64,7 @@ $result = mysqli_query($CONNEXION, "SELECT * FROM joueurs");
     <?php } ?>
     </ul>
 
-    <?php if (isset($_GET['edit'])) { 
+    <?php if (isset($_GET['edit'])) {
         $id = intval($_GET['edit']);
         $res = mysqli_query($CONNEXION, "SELECT * FROM joueurs WHERE id = $id");
         $joueur = mysqli_fetch_assoc($res);
