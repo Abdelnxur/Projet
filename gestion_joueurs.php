@@ -1,7 +1,6 @@
 <?php
 require("connect.php");
 
-// Connexion à la base
 $CONNEXION = mysqli_connect(SERVEUR_BD, USER_BD, PASS_BD);
 if (!$CONNEXION) {
     die("Erreur de connexion au serveur : " . mysqli_connect_error());
